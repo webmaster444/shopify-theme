@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="post_tags" id="blog-filter">
+    <a class="btn-secondary active">All</a>
+{% for link in linklists.blogs.links %}
+  {% assign blog = link.object %}
+    <a class="btn-secondary">{{blog.title}}</a>
+{% endfor %}
+  </div>
+<div class="blog-inner">
+{% for link in linklists.blogs.links %}
+  {% assign blog = link.object %}
+  {% for article in blog.articles %}  
+  	{% include 'post-card-grid', max_height: 250, article: article%}    
+  {% endfor %} 
+{% endfor %}
+  </div>
+</div>

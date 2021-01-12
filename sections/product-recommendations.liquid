@@ -1,0 +1,97 @@
+{%- if section.settings.show_product_recommendations -%}
+  {%- if recommendations.performed -%}
+    {%- if recommendations.products_count > 0 -%}
+      <div class="product-recommendations__inner">
+        {%- if section.settings.heading != blank -%}
+          <div class="section-header text-center">
+            <h2>{{ section.settings.heading | escape }}</h2>
+          </div>
+        {%- endif -%}
+        <ul class="grid grid--uniform grid--view-items">
+          {%- for product in recommendations.products -%}
+            <li class="grid__item small--one-half medium-up--one-quarter">
+              {% include 'product-card-grid', max_height: 250, product: product, show_vendor: section.settings.show_vendor %}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  {%- else  -%}
+    <div class="page-width" data-base-url="{{ routes.product_recommendations_url }}" data-product-id="{{ product.id }}" data-section-id="{{ section.id }}" data-section-type="product-recommendations"></div>
+  {%- endif -%}
+{%- endif -%}
+  
+{% schema %}
+{
+  "name": {
+    "en": "Product recommendations"    
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_product_recommendations",
+      "label": {
+        "en": "Show dynamic recommendations"
+      },
+      "info": {        
+        "en": "Dynamic recommendations change and improve with time. [Learn more](https://help.shopify.com/en/themes/development/recommended-products)"      
+      },
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": {
+        "en": "Heading"        
+      },
+      "default": {
+        "en": "You may also like"        
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": {
+        "en": "Show vendor"
+      },
+      "default": false
+    }
+  ]
+}
+{% endschema %}
+
+ {% javascript %}
+   var loadProductRecommendationsIntoSection = function() {
+     // Look for an element with class 'product-recommendations'
+     var productRecommendationsSection = document.querySelector(".product-recommendations");
+     if (productRecommendationsSection === null) { return; }
+     // Read product id from data attribute
+     var productId = productRecommendationsSection.dataset.productId;
+     // Read base URL from data attribute
+     var baseUrl = productRecommendationsSection.dataset.baseUrl;
+     // Read limit from data attribute
+     var limit = productRecommendationsSection.dataset.limit;
+     // Build request URL
+     var requestUrl = baseUrl + "?section_id=product-recommendations&product_id=" + productId + "&limit=" + limit;
+     // Create request and submit it using Ajax
+     var request = new XMLHttpRequest();
+     request.open("GET", requestUrl);
+     request.onload = function() {
+       if (request.status >= 200 && request.status < 300){
+         var container = document.createElement("div");
+         container.innerHTML = request.response;
+         productRecommendationsSection.parentElement.innerHTML = container.querySelector(".product-recommendations").innerHTML;
+       }
+     };
+     request.send();
+   };
+
+  // Listen for changes done in the Theme Editor
+   document.addEventListener("shopify:section:load", function(event) {
+     if (event.detail.sectionId === "product-recommendations") {
+       loadProductRecommendationsIntoSection();
+     }
+   });
+   // Fetching the recommendations on page load
+   loadProductRecommendationsIntoSection();
+   {% endjavascript %}

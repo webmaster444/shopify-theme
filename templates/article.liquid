@@ -1,0 +1,54 @@
+{% assign number_of_comments = article.comments_count %}
+{% if comment and comment.created_at %}
+  {% assign number_of_comments = article.comments_count %}
+{% endif %}
+<div class="single-header" style="background-image:url({{'banner1.png'|asset_url}})">      
+  <div class="container">
+    <h1 class="text-center">{{ article.title }}</h1>
+    <div class="author"><img src="{{ article.user.image | img_url: 'master' }}" alt="{{ article.author }}">By {{ article.author }}</div>
+  </div>
+  </div>
+<div class="container pb50">
+<div class="single-content">
+  <div class="signle-container">
+    {{ article.content }}
+      <div class="entry-taxonomy">
+      <div class="tags-links">Tag:
+  {% for tag in article.tags %}
+        <a href="#">{{ tag }}</a>
+  {% endfor %}
+      </div>
+    </div>
+  </div>  
+</div>
+{% if blog.comments_enabled? %}
+  <h2>{{ number_of_comments }} comments</h2>
+  {% paginate article.comments by 5 %}
+    {% for comment in article.comments %}
+      <div>
+        <div>{{ comment.content }}</div>
+        {{ comment.author }} @ {{ comment.created_at }}
+      </div>
+    {% endfor %}
+    {% if paginate.pages > 1 %}
+      {{ paginate | default_pagination }}
+    {% endif %}
+  {% endpaginate %}
+
+  <div>
+    {% form 'new_comment', article %}
+      {{ form.errors | default_errors }}
+      <label for="CommentAuthor">name</label>
+      <input type="text" name="comment[author]" id="CommentAuthor" placeholder="name" value="{{ form.author }}" autocapitalize="words">
+
+      <label for="CommentEmail">email</label>
+      <input type="email" name="comment[email]" id="CommentEmail" placeholder="email" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
+
+      <label for="CommentBody">message</label>
+      <textarea name="comment[body]" id="CommentBody" placeholder="message">{{ form.body }}</textarea>
+
+      <input type="submit" value="post">
+    {% endform %}
+  </div>
+{% endif %}
+</div>

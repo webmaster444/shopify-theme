@@ -1,0 +1,100 @@
+<header id="masthead" class="site-header" role="banner" style="">
+
+				<div class="container">
+			<div class="header-inner">
+				<div class="site-menu">
+                  <div class="menu-main-menu-container">
+                    <ul id="menu-main-menu" class="menu">
+	{% for link in linklists.main-menu.links %}
+    {% assign child_list_handle = link.title | handleize %}
+    {% if linklists[child_list_handle].links != blank %}
+      <li class="menu-item menu-item-has-children"><a href="{{ link.url }}">{{ link.title }}</a>
+        <ul class="sub-menu">
+      {% for childlink in linklists[child_list_handle].links %}
+          <li class="menu-item"><a href="{{ childlink.url }}">{{ childlink.title | escape }}</a></li>
+      {% endfor %}
+        </ul>
+        </li>
+    {% else %}
+        <li class="menu-item"><a href="{{ link.url }}">{{ link.title }}</a></li>
+    {% endif %}
+  {% endfor %}
+                  </ul>
+					</div>					
+				</div>
+				<div class="site-logo">
+                  <a href="{{shop.url}}" class="custom-logo-link" rel="home">
+                    {%- if section.settings.logo != blank -%}
+						<img class="custom-logo white" src="{{ section.settings.logo | img_url: 'large' }}" alt="">	
+                    {%- else -%}
+                    	<img class="custom-logo white" src="{{'sweet_kiss_logo_black.png'|asset_url}}'|asset_url}}" alt="">
+                    {%- endif -%}
+                    
+                    {%- if section.settings.dark_logo != blank -%}
+                    	<img class="custom-logo black" src="{{ section.settings.dark_logo | img_url: 'large' }}" alt="">
+                    {%- else -%}
+                    	<img class="custom-logo black" src="{{'sweet_kiss_logo.png'|asset_url}}" alt="">
+                    {%- endif -%}
+                  </a>
+									</div>
+				<div class="tools">                  
+					<ul>
+						<li><a href="javascript:void(0)" class="search">
+							<img class="black" src="{{'Icon_search_black.png'|asset_url}}" alt="Search">
+							<img class="white" src="{{'Icon_search.png'|asset_url}}" alt="Search">
+						</a></li>
+                        {% if shop.customer_accounts_enabled %}
+                      	<li><a href="/account/" title="user">
+							<img class="black" src="{{'user_black.png'|asset_url}}" alt="My Account">
+							<img class="white" src="{{'User.png'|asset_url}}" alt="My Account">
+						</a></li>
+                      	{% endif %}
+
+						<li><a href="/cart" class="cart">
+							<img class="black" src="{{'cart_black.png'|asset_url}}" alt="Cart">
+							<img class="white" src="{{'cart.png'|asset_url}}" alt="Cart">
+							    <span class="cart-count"> {{cart.item_count}}</span>
+    
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="site-search-wrap">
+			<div class="site-search-inner">
+				<div class="aws-container">
+                  <form class="aws-search-form" action="#/" method="get" role="search">
+                    <div class="aws-wrapper full">
+                      <img class="black" src="{{'Icon_search_black.png'|asset_url}}" alt="Search">
+                      <input type="search" name="q" value="" class="" placeholder="What are you looking for?" autocomplete="off">      
+                    </div>
+                  </form>
+              </div>
+              <div class="close-search">×</div>
+			</div>
+		</div>	
+        </header>
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [{
+      "type": "image_picker",
+      "id": "logo",
+      "label": {
+        "en": "Logo image"        
+      }
+    },{
+      "type": "image_picker",
+      "id": "dark_logo",
+      "label": {
+        "en": "Dark Logo image"        
+      }
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

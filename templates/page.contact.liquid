@@ -1,0 +1,22 @@
+<div class="container pb50">
+  <div class="inner-small-wrap">
+    {{page.content}}
+{% form 'contact' %}
+  {% if form.posted_successfully? %} Thank you for your contact {% endif %}
+  {{ form.errors | default_errors }}
+  <div class="form-control">
+  <input type="text" id="ContactFormName" name="contact[name]" placeholder="Name">
+  </div>
+    <div class="form-control">
+  <input type="email" id="ContactFormEmail" name="contact[email]" placeholder="Email">
+    </div>
+    <div class="form-control">
+  <input type="tel" id="ContactFormPhone" name="contact[phone]" placeholder="Phone">
+    </div>
+    <div class="form-control">
+  <textarea rows="10" id="ContactFormMessage" name="contact[body]" placeholder="Enquiry"></textarea>
+    </div>
+    <button type="submit" class="btn-primary full">Submit </button>
+{% endform %}
+  </div>
+</div>

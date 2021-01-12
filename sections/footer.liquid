@@ -1,0 +1,93 @@
+        <footer>
+            <div id="social_links" class="flex-wrapper">
+                <h3>Connect With Us</h3>
+                <div class="social_links-wrapper"><ul>
+                    <li><a href="https://www.facebook.com/sweetkisscakeshop/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://www.instagram.com/sweetkisscakes/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a></li>
+                </ul></div>
+            </div>
+            <div class="site-footer">
+                <div class="container">
+                    <div class="flex-wrapper">
+                        <div class="footer-widget">
+                            <h3>Help And Support</h3>
+                            <div class="footer-menu">
+                                <ul>
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="#">Wholesale</a></li>
+                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="#">Electronic Catalogue</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="footer-widget">
+                            <h3>Information</h3>
+                            <div class="footer-menu">
+                                <ul>
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Shipping & Delivery</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="footer-widget">
+                          {%- if section.settings.subscribe -%}
+                            <h3>Receive exclusive offers and delicious recipes</h3>
+                            <div class="footer-menu">
+                                <form id="subscribe-form">
+                                    <input type="text" id="name" placeholder="Name" />
+                                    <input type="email" id="email" placeholder="Email" />
+                                    <button type="submit" class="btn-primary">Subscribe</button>
+                                </form>
+                            </div>
+                          {%- endif -%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="site-info">
+                <div class="container">
+                    <div class="flex-wrapper full space-between">
+                        <div class="copyright">©  2020 Sweet Kiss Cakes</div>
+									<div class="payment-method">
+						<div id="custom_html-2" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><ul>
+	<li><img src="https://skc.dev-ss-pro.com/wp-content/uploads/2020/07/Visa-dark.png" alt="Visa"></li>
+	<li><img src="https://skc.dev-ss-pro.com/wp-content/uploads/2020/07/MasterCard-dark.png" alt="Master Card"></li>
+	<li><img src="https://skc.dev-ss-pro.com/wp-content/uploads/2020/07/Paypal-dark.png" alt="Paypal"></li>
+</ul></div></div>					</div>
+								<div class="credit-by">Site by <a href="#">Teko</a></div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [{
+      "type": "checkbox",
+      "id": "subscribe",
+      "label": {
+        "en": "Show Subscribe"        
+      }
+    },{
+      "type": "link_list",
+      "id": "footer-menu-1",
+      "label": {
+        "en": "Footer menu 1"        
+      }
+    },{
+      "type": "link_list",
+      "id": "footer-menu-2",
+      "label": {
+        "en": "Footer menu 2"        
+      }
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

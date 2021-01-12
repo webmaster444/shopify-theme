@@ -1,0 +1,58 @@
+{% if cart.item_count > 0 %}
+  <div class="container pb50">
+  <form action="/cart" method="post" novalidate>
+    <table id="cart">
+      <thead>
+        <th></th>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th></th>
+      </thead>
+      <tbody>
+        {% for item in cart.items %}
+          <tr>
+            <td class="product-img">
+              <a href="{{ item.url | within: collections.all }}">
+                <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+              </a>
+            </td>
+            <td>
+              <a href="{{ item.url }}">{{ item.product.title }}</a>
+              {{ item.variant.title }}              
+            </td>
+            <td>{{ item.price | money }}</td>
+            <td class="quantity-td">
+              <button type="button" class="minus">-</button><input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" disabled><button type="button" class="plus">+</button>
+            </td>
+            <td>
+              {% if item.original_line_price != item.line_price %}{{ item.original_line_price | money }}{% endif %}
+              {{ item.line_price | money }}
+              {% for discount in item.discounts %}{{ discount.title }}{% endfor %}
+            </td>
+            <td>
+              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    
+
+    <div class="flex-wrapper space-between">
+      <div class="coupon flex-wrapper">
+        <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon code"> <button type="submit" class="btn-primary" name="apply_coupon" value="Apply coupon">Apply coupon</button>
+      </div>
+      <div class="flex-wrapper">
+        <button type="submit" class="btn-primary" name="checkout">Proceed to Checkout</button><button type="submit" id="update-cart-btn" class="btn-primary" name="update" disabled>Update Cart</button>
+      </div>
+    </div>    	               
+  </form>
+</div>
+{% else %}
+<div class="container pb50">
+  <h2>cart</h2>
+  Cart is empty
+</div>
+{% endif %}

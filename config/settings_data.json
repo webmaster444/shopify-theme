@@ -1,0 +1,55 @@
+{
+  "current": {
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo": "shopify:\/\/shop_images\/Logo_0a7b0829-2e65-4f59-b834-80d8b15adfb4.png",
+          "dark_logo": "shopify:\/\/shop_images\/Logo.png"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "subscribe": true,
+          "footer-menu-1": "",
+          "footer-menu-2": ""
+        }
+      },
+      "home-slider": {
+        "type": "home-slider",
+        "blocks": {
+          "ff21e0ec-c82b-428d-8e9f-e07beca717e6": {
+            "type": "slide",
+            "settings": {
+              "feature_image": "shopify:\/\/shop_images\/banner1.png",
+              "heading": "We believe that food is a multi-sensory art form.",
+              "text": "The Christou family have established themselves in serving up some of Sydney's best sweet treats.",
+              "cta_url": "shopify:\/\/collections",
+              "cta_text": "Explore Products"
+            }
+          },
+          "e3cfe4f4-811e-45fe-b644-58606d43d59c": {
+            "type": "slide",
+            "settings": {
+              "feature_image": "shopify:\/\/shop_images\/banner1.png",
+              "heading": "Second Heading",
+              "text": "The Christou family have established themselves in serving up some of Sydney's best sweet treats.",
+              "cta_url": "shopify:\/\/collections\/classic-cakes-1",
+              "cta_text": "Shop Now"
+            }
+          }
+        },
+        "block_order": [
+          "ff21e0ec-c82b-428d-8e9f-e07beca717e6",
+          "e3cfe4f4-811e-45fe-b644-58606d43d59c"
+        ],
+        "settings": {}
+      }
+    },
+    "content_for_index": []
+  },
+  "presets": {
+    "Default": {}
+  }
+}

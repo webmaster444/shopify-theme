@@ -1,0 +1,35 @@
+
+<!-- <div class="container-fluid back-brown banner">
+ 	<div class="container flex-wrapper align-center">
+      <div class="collection-content half">
+      <h1 class="text-left">{{ collection.title }}</h1>  
+        <p>{{collection.description}}</p>        
+      </div>
+      <div class="half">
+      <img src="{{ collection | img_url: 'large' }}" alt="{{collection.title}}"/>  
+      </div>
+  </div>
+  
+</div> -->
+{% render 'collection-sorting' %}
+  <div class="container">    
+{% paginate collection.products by 3 %}    
+  <div class="products-inner">
+  {% for product in collection.products %}
+  	{% include 'product-card-grid', max_height: 250, product: product, show_vendor: section.settings.show_vendor %}
+  {% else %}
+    <p>no matches</p>
+  {% endfor %}
+    
+  </div>
+    {% if paginate.next %}
+        <div id="more" class=""><p><a class="btn-primary" href="{{ paginate.next.url }}">Show me More</a></p></div>    	
+    {% endif %}
+    <div class="loading-gif-wrapper hide"><img src="{{'loading.gif'|asset_url}}" alt="loading"/></div>
+      {% if paginate.pages > 1 %}
+    <div class="hide default-pagination">
+    	{{ paginate | default_pagination }}
+    </div>
+  {% endif %}
+{% endpaginate %}
+</div>

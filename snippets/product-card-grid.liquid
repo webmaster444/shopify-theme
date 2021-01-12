@@ -1,0 +1,36 @@
+{% comment %}
+    Renders a product card using "Grid" style
+    Accepts:
+    - max_height: {Number} Maximum height of the product's image (required)
+    - product: {Object} Product Liquid object (required)
+    - show_vendor: {Boolean} Show the product's vendor depending on the section setting (optional)
+
+    Usage:
+    {% include 'product-card-grid', max_height: max_height, product: product, show_vendor: section.settings.show_vendor %}
+{% endcomment %}
+<div class="grid-view-item{% unless product.available %} grid-view-item--sold-out{% endunless %} product-grid">
+  <form action="/cart/add" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+  <input min="1" type="number" id="quantity" name="quantity" class="hide" value="1"/>
+  <a class="grid-view-item__link grid-view-item__image-container full-width-link" href="{{ product.url | within: collection }}">
+    <span class="visually-hidden hide">{{ product.title }}</span>
+  </a>
+
+  {% capture img_id %}ProductCardImage-{{ section.id }}-{{ product.id }}{% endcapture %}
+  {% capture wrapper_id %}ProductCardImageWrapper-{{ section.id }}-{{ product.id }}{% endcapture %}
+  {%- assign preview_image = product.featured_media.preview_image -%}
+  {%- assign img_url = preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+  <div class="product-card">
+    <div class="product-inner">
+      <a href="{{product.url}}" alt="{{product.title}}">
+         {% for image in product.images limit:1 %}
+             <img src="{{ image.src | product_img_url: '500x' }}">
+          {% endfor %}
+        <h2>{{product.title}}</h2>
+        <span class="price"><del class="compared-price">{{product.compare_at_price_max|money}}</del>{{product.price|money}}</span></a>
+      <div class="action-buttons"><a href="{{product.url}}" class="btn-primary">View Info</a><button type="submit" class="btn-secondary add-to-cart-btn">Add to cart</button></div>
+    </div>    
+  </div>  
+  </form>
+</div>

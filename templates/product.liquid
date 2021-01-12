@@ -1,0 +1,35 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+<div class="container flex-wrapper">
+  <div class="product-img-wrapper half">
+{% for image in product.images %}
+  <a href="{{ image.src | img_url: 'large' }}">
+    <img src="{{ image.src | img_url: 'large' }}" alt="{{ image.alt | escape }}">
+  </a>
+{% endfor %}
+  </div>
+  <div class="product-content half">
+<h1>{{ product.title }}</h1>
+    <p class="price">{{ current_variant.price | money }}</p>
+<form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+  <select name="id" id="productSelect">
+    {% for variant in product.variants %}
+      {% if variant.available %}
+        <option value="{{ variant.id }}">
+          {{ variant.title }} - {{ variant.price | money_with_currency }}
+        </option>
+      {% else %}
+        <option disabled="disabled">
+          {{ variant.title }} - sold out
+        </option>
+      {% endif %}
+    {% endfor %}
+  </select>  
+  <div class="increase-quantity flex-wrapper">
+  <button type="button" class="minus">-</button><input type="number" id="Quantity" name="quantity" value="1" min="1"><button type="button" class="plus">+</button><button type="submit" class="btn-primary" name="add" id="AddToCart">Add to cart</button>
+  </div>  
+</form>
+<div class="description-wrapper">{{ product.description }}</div>
+  </div>
+</div>
+{% section 'product-recommendations' %}

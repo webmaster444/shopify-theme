@@ -1,0 +1,49 @@
+<div class='mini-cart drawer drawer--right'>  
+{% if cart.item_count > 0 %}
+  <div class="container pb50 height100">
+  <h4>Cart</h4>
+    <a class="close-minicart"><i class="fas fa-times"></i></a>
+  <form action="/cart" method="post" novalidate class="height100">
+    <div id="cart">
+        {% for item in cart.items %}
+          <div class="mini-cartitem-row flex-wrapper align-center">
+            <div class="product-img">
+              <a href="{{ item.url | within: collections.all }}">
+                <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+              </a>
+            </div>
+            <div>
+              <a href="{{ item.url }}">{{ item.product.title }}</a>                        
+              <div class="flex-wrapper"><button type="button" class="minus">-</button><input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" disabled><button type="button" class="plus">+</button></div>
+            
+              {% if item.original_line_price != item.line_price %}{{ item.original_line_price | money }}{% endif %}
+              {{ item.line_price | money }}
+              {% for discount in item.discounts %}{{ discount.title }}{% endfor %}            
+              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a>
+            </div>
+          </div>
+        {% endfor %}
+    </div>
+    
+
+    <div class="full minicart-footer">
+      <div class="coupon flex-wrapper hide">
+        <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon code"> <button type="submit" class="btn-primary" name="apply_coupon" value="Apply coupon">Apply coupon</button>
+      </div>
+      <div class="flex-wrapper space-between full">
+        <span>Subtotal</span><span>{{cart.total_price|money}}
+      </div>
+      <div class="flex-wrapper full">
+        <button type="submit" class="btn-primary full" name="checkout">Proceed to Checkout</button>
+      </div>
+    </div>    	               
+  </form>
+</div>
+{% else %}
+<div class="container pb50">
+  <h4>cart</h4>
+  <a class="close-minicart"><i class="fas fa-times"></i></a>
+  Cart is empty
+</div>
+{% endif %}
+</div>

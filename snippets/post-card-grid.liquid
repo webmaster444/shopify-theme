@@ -1,0 +1,9 @@
+<div class="post">
+<img src="{{ article.image.src | img_url: '500x' }}" alt="{{article.image.alt}}"/>
+  <div class="content-inner">
+    <span class="posted-on">{{ article.published_at | date: "%a, %b %d, %y" }}</span>   
+	<h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+    <p>{{article.excerpt_or_content}}</p>
+	<a class="btn-secondary" href="{{ article.url }}">Read more</a>
+  </div>
+</div>
